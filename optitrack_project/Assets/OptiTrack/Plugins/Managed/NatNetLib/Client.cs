@@ -115,9 +115,9 @@ namespace NaturalPoint.NatNetLib
         #endregion Private fields
 
 
-        public NatNetClient()
+        public NatNetClient( NatNetConnectionType connectionType )
         {
-            NatNetError retval = NatNetLib.NativeMethods.NatNet_Client_Create( out m_clientHandle );
+            NatNetError retval = NatNetLib.NativeMethods.NatNet_Client_Create( out m_clientHandle, connectionType );
             NatNetException.ThrowIfNotOK( retval, "NatNet_Client_Create failed." );
 
             if ( m_clientHandle == IntPtr.Zero )
@@ -133,8 +133,7 @@ namespace NaturalPoint.NatNetLib
         }
 
 
-        public void Connect( NatNetConnectionType connType,
-                             IPAddress localAddress,
+        public void Connect( IPAddress localAddress,
                              IPAddress serverAddress,
                              UInt16 serverCommandPort = NatNetConstants.DefaultCommandPort,
                              UInt16 serverDataPort = NatNetConstants.DefaultDataPort,
@@ -143,11 +142,10 @@ namespace NaturalPoint.NatNetLib
             ThrowIfDisposed();
 
             sNatNetClientConnectParams initParams = new sNatNetClientConnectParams {
-                ConnectionType = connType,
-                ServerCommandPort = serverCommandPort,
-                ServerDataPort = serverDataPort,
                 LocalAddress = localAddress.ToString(),
                 ServerAddress = serverAddress.ToString(),
+                ServerCommandPort = serverCommandPort,
+                ServerDataPort = serverDataPort,
                 MulticastAddress = multicastAddress == null ? null : multicastAddress.ToString()
             };
 
