@@ -18,17 +18,17 @@ public class ResetAnimationPosition : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)){
-            setPosition();
+            
             anim.SetTrigger("AnimTrigger");
+            setPosition();
         }
     }
 
     void setPosition()
     {
-        Debug.Log("asd");
+        Debug.Log("jee");
         if (offSetPos == Vector3.zero)
         {
-            Debug.Log("jee");
             offSetPos = pointOfReference.localPosition;
         }
         transform.position += (pointOfReference.localPosition - offSetPos);
