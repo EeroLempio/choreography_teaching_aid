@@ -5,22 +5,33 @@ using UnityEngine;
 public class ResetAnimationPosition : MonoBehaviour
 {
     public Transform pointOfReference;
+
+    Animator anim;
     Vector3 offSetPos;
     // Start is called before the first frame update
     void Start()
     {
-        offSetPos = pointOfReference.position;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Space)){
+            setPosition();
+            anim.SetTrigger("AnimTrigger");
+        }
     }
 
     void setPosition()
     {
-        transform.position += pointOfReference.position - offSetPos;
-        pointOfReference.position = offSetPos;
+        Debug.Log("asd");
+        if (offSetPos == Vector3.zero)
+        {
+            Debug.Log("jee");
+            offSetPos = pointOfReference.localPosition;
+        }
+        transform.position += (pointOfReference.localPosition - offSetPos);
+        pointOfReference.localPosition = offSetPos;
     }
 }
