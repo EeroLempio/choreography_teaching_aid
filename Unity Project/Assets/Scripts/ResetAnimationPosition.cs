@@ -52,7 +52,6 @@ public class ResetAnimationPosition : MonoBehaviour
         transform.position = new Vector3(por.x, transform.position.y, por.z);
         transform.rotation = Quaternion.LookRotation(pointOfReference.forward, Vector3.up);
         pointOfReference.position = new Vector3(transform.position.x, por.y, transform.position.z);
-        
     }
 
     void playState(string stateName){
@@ -73,22 +72,23 @@ public class ResetAnimationPosition : MonoBehaviour
         }
     }
 
-    public IEnumerator PlayAndWaitForAnim(Animator targetAnim, string stateName)
+    IEnumerator PlayAndWaitForAnim(Animator targetAnim, string stateName)
     {
-    targetAnim.Play(stateName);
+        targetAnim.Play(stateName);
 
-    //Wait until we enter the current state
-    while (!targetAnim.GetCurrentAnimatorStateInfo(0).IsName(stateName))
-    {
-    yield return null;
-    }
+        //Wait until we enter the current state
+        while (!targetAnim.GetCurrentAnimatorStateInfo(0).IsName(stateName))
+        {
+            yield return null;
+        }
 
-    //Now, Wait until the current state is done playing
-    while ((targetAnim.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
-    {
-    yield return null;
-    }
+        //Now, Wait until the current state is done playing
+        while ((targetAnim.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
+        {
+            yield return null;
+        }
 
-    Debug.Log("yaaa");
+        Debug.Log("yaaa");
+        setPosition();
     }
 }
