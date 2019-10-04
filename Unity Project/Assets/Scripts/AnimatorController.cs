@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AnimatorController : MonoBehaviour
 {
+    public Transform pointOfReference;
     [HideInInspector]
     public List<string> stateNames;
 
-    public Transform pointOfReference;
-
+    Dictionary<string, Vector3> startPositions;
     Animator animator;
     void Awake(){ init();}
 
@@ -16,18 +16,28 @@ public class AnimatorController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         stateNames = new List<string>();
+        startPositions = new Dictionary<string, Vector3>();
         var clips = animator.runtimeAnimatorController.animationClips;
+        
         foreach(var clip in clips){
-            stateNames.Add(clip.name);
+            var stateName = clip.name;
+            clip.SampleAnimation(gameObject, 0);
+            startPositions.Add(stateName, pointOfReference.position);
+            stateNames.Add(stateName);
         }
-        Debug.Log(stateNames.Count);
     }
-    void setPosition()
+    void setPosition(string stateName)
     {
-        Vector3 por = pointOfReference.position;
-        transform.position = new Vector3(por.x, transform.position.y, por.z);
-        transform.rotation = Quaternion.LookRotation(pointOfReference.forward, Vector3.up);
-        pointOfReference.position = new Vector3(transform.position.x, por.y, transform.position.z);
+        Vector3 trPos = transform.position;
+        Vector3 prPos = pointOfReference.position;
+        Vector3 prFwd = pointOfReference.forward;
+        Vector3 offset = startPositions[stateName];
+
+        Vector3 lookPos = new Vector3(trPos.x + prFwd.x, 0, trPos.z + prFwd.z);
+        this.transform.LookAt(lookPos);
+
+        Vector3 posOffSet = transform.forward * offset.z + transform.right * offset.x;
+        transform.position = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
     }
 
     public void playStates(List<string> stateNames, bool loop){
@@ -46,20 +56,16 @@ public class AnimatorController : MonoBehaviour
     IEnumerator playStates(string stateName, List<string> stateNames, bool loop)
     {
         animator.Play(stateName);
-        setPosition();
-
-        //Wait until we enter the current state
+        setPosition(stateName);
         while (!animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
         {
             yield return null;
         }
 
-        //Now, Wait until the current state is done playing
         while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
         {
             yield return null;
         }
-
         playStates(stateNames, loop);
     }
 }
