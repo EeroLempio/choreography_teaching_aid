@@ -10,17 +10,18 @@ public class AnimatorController : MonoBehaviour
     public Transform pointOfReference;
 
     Animator animator;
-    void Awake(){ init();}
+    void Awake() { init(); }
 
-    void init(){
+    void init()
+    {
         animator = GetComponent<Animator>();
 
         stateNames = new List<string>();
         var clips = animator.runtimeAnimatorController.animationClips;
-        foreach(var clip in clips){
+        foreach (var clip in clips)
+        {
             stateNames.Add(clip.name);
         }
-        Debug.Log(stateNames.Count);
     }
     void setPosition()
     {
@@ -30,18 +31,20 @@ public class AnimatorController : MonoBehaviour
         pointOfReference.position = new Vector3(transform.position.x, por.y, transform.position.z);
     }
 
-    public void playStates(List<string> stateNames, bool loop){
-
-        if(stateNames.Count == 0){
+    public void playStates(List<string> stateNames, bool loop)
+    {
+        if (stateNames.Count == 0)
+        {
             return;
         }
         string stateName = stateNames[0];
         stateNames.RemoveAt(0);
-        if (loop){
+        if (loop)
+        {
             stateNames.Add(stateName);
         }
         var coroutine = playStates(stateName, stateNames, loop);
-            StartCoroutine(coroutine);
+        StartCoroutine(coroutine);
     }
     IEnumerator playStates(string stateName, List<string> stateNames, bool loop)
     {
