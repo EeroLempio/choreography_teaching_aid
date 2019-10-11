@@ -5,48 +5,39 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform pointOfReference;
-    [Range(0, 20)]
-    public float minDistance, maxDistance;
+    [Range(12, 90)]
+    public float minFov, maxFov;
     
     Transform pivot;
     Transform cameraTransform;
-    // Start is called before the first frame update
+
+    Camera camera;
 
     void Awake()
     {
+        camera = GetComponent<Camera>();
         cameraTransform = transform;
         pivot = new GameObject("CameraPivot").transform;
         cameraTransform.rotation = new Quaternion();
-        cameraTransform.position = new Vector3(0, 0, -maxDistance);
+        cameraTransform.position = new Vector3(0, 0, -10);
         cameraTransform.parent = pivot;
     }
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         track();
-        zoom(Input.GetAxis("Mouse ScrollWheel") * 6);
-        if(Input.GetMouseButton(0))
-            rotate((Input.GetAxis("Mouse X") * 2), (Input.GetAxis("Mouse Y") * 2));
     }
 
     void track(){
         pivot.position = pointOfReference.position;
     }
 
-    void zoom(float amount){
-        if(
-            (amount < 0 && Vector3.Distance(cameraTransform.position, pivot.position) > minDistance) || 
-            (amount > 0 && Vector3.Distance(cameraTransform.position, pivot.position) < maxDistance)){
-            cameraTransform.position -= cameraTransform.forward * amount;
-        }
+    public void zoom(float amount){
+        camera.fieldOfView += amount;
+        camera.fieldOfView = Mathf.Clamp(camera.fieldOfView, minFov, maxFov);
     }
 
-    void rotate(float hzAmount, float vtAmount){
+    public void rotate(float hzAmount, float vtAmount){
         pivot.Rotate(0,hzAmount,0, Space.World);
         if(
             (vtAmount < 0 && Vector3.Dot(cameraTransform.forward, Vector3.up) < 0) || 
