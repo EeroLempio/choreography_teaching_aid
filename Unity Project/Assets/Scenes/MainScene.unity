@@ -2605,8 +2605,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointOfReference: {fileID: 1140353310}
-  minFov: 0
-  maxFov: 0
+  minFov: 12
+  maxFov: 70
 --- !u!114 &1268557594
 MonoBehaviour:
   m_ObjectHideFlags: 0
