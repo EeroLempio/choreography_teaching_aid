@@ -10,15 +10,16 @@ public class AnimatorController : MonoBehaviour
 
     Dictionary<string, Vector3> startPositions;
     Animator animator;
-    void Awake(){ init();}
+    void Awake() { init(); }
 
-    void init(){
+    void init()
+    {
         animator = GetComponent<Animator>();
 
         stateNames = new List<string>();
         startPositions = new Dictionary<string, Vector3>();
         var clips = animator.runtimeAnimatorController.animationClips;
-        
+     
         foreach(var clip in clips){
             var stateName = clip.name;
             clip.SampleAnimation(gameObject, 0);
@@ -40,18 +41,20 @@ public class AnimatorController : MonoBehaviour
         transform.position = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
     }
 
-    public void playStates(List<string> stateNames, bool loop){
-
-        if(stateNames.Count == 0){
+    public void playStates(List<string> stateNames, bool loop)
+    {
+        if (stateNames.Count == 0)
+        {
             return;
         }
         string stateName = stateNames[0];
         stateNames.RemoveAt(0);
-        if (loop){
+        if (loop)
+        {
             stateNames.Add(stateName);
         }
         var coroutine = playStates(stateName, stateNames, loop);
-            StartCoroutine(coroutine);
+        StartCoroutine(coroutine);
     }
     IEnumerator playStates(string stateName, List<string> stateNames, bool loop)
     {

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class paskascripti : MonoBehaviour
 {
+    public static List<string> mylist;
     // Start is called before the first frame update
     void Start()
     {
-        List<string> mylist = new List<string>(new string[] { "RevTB(1)", "NatTF(1)", "BasicLF(1)", "NatTF(1)", "RevTB(1)", "NatTF(1)", "RevTF(1)", "SpinT(1)", "BasicLF(1)", "SpinT(1)" });
+    }
+
+    public void startDance()
+    {
         AnimatorController ac = GetComponent<AnimatorController>();
         ac.playStates(mylist, true);
     }
@@ -15,6 +19,6 @@ public class paskascripti : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        mylist = ButtonHandler.listOfFigures;
     }
 }
