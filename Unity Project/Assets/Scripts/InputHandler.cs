@@ -56,7 +56,7 @@ public class InputHandler : MonoBehaviour
             } else {
                 t0DeltaPos.x = t0DeltaPos.x / width;
                 t0DeltaPos.y = t0DeltaPos.y / height;
-                cameraController.rotate(t0DeltaPos.x * 30, t0DeltaPos.y * 30);
+                cameraController.rotate(t0DeltaPos.x * 30, -t0DeltaPos.y * 30);
             }
         }
     }
