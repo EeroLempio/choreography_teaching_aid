@@ -1447,6 +1447,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1268557594}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &698169838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2508,6 +2519,7 @@ GameObject:
   - component: {fileID: 1268557591}
   - component: {fileID: 1268557590}
   - component: {fileID: 1268557593}
+  - component: {fileID: 1268557594}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2593,8 +2605,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointOfReference: {fileID: 1140353310}
-  minDistance: 3
-  maxDistance: 10
+  minFov: 0
+  maxFov: 0
+--- !u!114 &1268557594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268557589}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594d93fac7cb295408a5ecce0b5fb444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1335791022
 GameObject:
   m_ObjectHideFlags: 0
