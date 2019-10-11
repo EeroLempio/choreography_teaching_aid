@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 42605732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 2}
+  m_LocalScale: {x: 2, y: 1, z: 4}
   m_Children: []
   m_Father: {fileID: 1829712409}
   m_RootOrder: 0
@@ -541,6 +541,34 @@ PrefabInstance:
     - target: {fileID: 100132, guid: 233a319efc007814798900e94b7b18d2, type: 3}
       propertyPath: m_Name
       value: Beta@Beta
+      objectReference: {fileID: 0}
+    - target: {fileID: 100132, guid: 233a319efc007814798900e94b7b18d2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 233a319efc007814798900e94b7b18d2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 233a319efc007814798900e94b7b18d2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0000000031631984
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 233a319efc007814798900e94b7b18d2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.71138245
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 233a319efc007814798900e94b7b18d2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000000032092375
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 233a319efc007814798900e94b7b18d2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70280516
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 233a319efc007814798900e94b7b18d2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90.69501
       objectReference: {fileID: 0}
     - target: {fileID: 400132, guid: 233a319efc007814798900e94b7b18d2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1181,6 +1209,7 @@ GameObject:
   - component: {fileID: 1268557592}
   - component: {fileID: 1268557591}
   - component: {fileID: 1268557590}
+  - component: {fileID: 1268557593}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
