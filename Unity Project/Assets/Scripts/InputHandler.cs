@@ -18,29 +18,36 @@ public class InputHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(mobile){
+        if (mobile)
+        {
             handleTouch();
-        } else {
+        }
+        else
+        {
             handleMouse();
         }
     }
 
-    void handleMouse(){
+    void handleMouse()
+    {
         cameraController.zoom(Input.GetAxis("Mouse ScrollWheel") * 6);
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
             cameraController.rotate((Input.GetAxis("Mouse X") * 2), (Input.GetAxis("Mouse Y") * 2));
     }
-    void handleTouch(){
-        if(Input.touchCount > 0){
+    void handleTouch()
+    {
+        if (Input.touchCount > 0)
+        {
             Touch t0 = Input.GetTouch(0);
             Vector2 t0DeltaPos = t0.deltaPosition;
-            if(Input.touchCount == 2){
+            if (Input.touchCount == 2)
+            {
                 Touch t1 = Input.GetTouch(1);
                 Vector2 t1DeltaPos = t1.deltaPosition;
 
@@ -53,7 +60,9 @@ public class InputHandler : MonoBehaviour
                 float zoomAmount = (prevTDeltaMag - tDeltaMag) / height;
 
                 cameraController.zoom(zoomAmount * 30);
-            } else {
+            }
+            else
+            {
                 t0DeltaPos.x = t0DeltaPos.x / width;
                 t0DeltaPos.y = t0DeltaPos.y / height;
                 cameraController.rotate(t0DeltaPos.x * 30, -t0DeltaPos.y * 30);
