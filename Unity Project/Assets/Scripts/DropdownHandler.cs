@@ -24,6 +24,9 @@ public class DropdownHandler : MonoBehaviour
                 myFigure = "RevTB(1)";
                 break;
             case 4:
+                myFigure = "RevTF(1)";
+                break;
+            case 5:
                 myFigure = "BasicLF(1)";
                 break;
         }
