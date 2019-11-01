@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    bool mobile = true;
+    bool mobile = false;
 
     float width, height;
 

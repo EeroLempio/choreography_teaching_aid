@@ -19,8 +19,9 @@ public class AnimatorController : MonoBehaviour
         stateNames = new List<string>();
         startPositions = new Dictionary<string, Vector3>();
         var clips = animator.runtimeAnimatorController.animationClips;
-     
-        foreach(var clip in clips){
+
+        foreach (var clip in clips)
+        {
             var stateName = clip.name;
             clip.SampleAnimation(gameObject, 0);
             startPositions.Add(stateName, pointOfReference.position);

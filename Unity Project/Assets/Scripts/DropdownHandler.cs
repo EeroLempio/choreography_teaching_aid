@@ -15,7 +15,7 @@ public class DropdownHandler : MonoBehaviour
         switch (myDropdown.value)
         {
             case 1:
-                myFigure = "Natural_Closed_change_123";
+                myFigure = "Natural_Closed_Change_123";
                 break;
             case 2:
                 myFigure = "Natural_Closed_Change_456";
