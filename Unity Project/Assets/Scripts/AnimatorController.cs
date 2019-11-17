@@ -45,6 +45,21 @@ public class AnimatorController : MonoBehaviour
         Vector3 dir = startDirs[stateName];
         
         Vector3 posOffSet = transform.forward * offset.z + transform.right * offset.x;
+        transform.position = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
+
+        float angle = Vector3.SignedAngle(transform.forward, prFwd, Vector3.up) + 
+        Vector3.SignedAngle(Vector3.forward, dir, Vector3.up);
+
+        transform.RotateAround(prPos, Vector3.up, angle);
+
+        /*
+                Vector3 trPos = transform.position;
+        Vector3 prPos = getBetweenPosition();
+        Vector3 prFwd = pointOfReference1.forward;
+        Vector3 offset = startPositions[stateName];
+        Vector3 dir = startDirs[stateName];
+        
+        Vector3 posOffSet = transform.forward * offset.z + transform.right * offset.x;
         Vector3 pos = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
         Vector3 lookAtPos = pointOfReference1.position + prFwd + (transform.position - pointOfReference1.position);
         lookAtPos.y = 0;
@@ -53,6 +68,7 @@ public class AnimatorController : MonoBehaviour
         transform.position = pos;
 
         transform.RotateAround(prPos, Vector3.up, Vector3.SignedAngle(Vector3.forward, dir, Vector3.up));
+         */
     }
 
     public void playStates(List<string> stateNames, bool loop)
