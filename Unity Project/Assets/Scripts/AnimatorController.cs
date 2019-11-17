@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class AnimatorController : MonoBehaviour
 {
-    public Transform pointOfReference;
+    public Transform pointOfReference1, pointOfReference2;
     [HideInInspector]
     public List<string> stateNames;
 
     Dictionary<string, Vector3> startPositions;
+    Dictionary<string, Vector3> startDirs;
     Animator animator;
     void Awake() { init(); }
 
@@ -18,28 +19,40 @@ public class AnimatorController : MonoBehaviour
 
         stateNames = new List<string>();
         startPositions = new Dictionary<string, Vector3>();
+        startDirs = new Dictionary<string, Vector3>();
         var clips = animator.runtimeAnimatorController.animationClips;
 
         foreach (var clip in clips)
         {
             var stateName = clip.name;
             clip.SampleAnimation(gameObject, 0);
-            startPositions.Add(stateName, pointOfReference.position);
+            startPositions.Add(stateName, getBetweenPosition());
+            startDirs.Add(stateName, pointOfReference1.forward);
             stateNames.Add(stateName);
         }
     }
+
+    Vector3 getBetweenPosition(){
+        return pointOfReference1.position + (0.5f * (pointOfReference2.position - pointOfReference1.position));
+    }
+
     void setPosition(string stateName)
     {
         Vector3 trPos = transform.position;
-        Vector3 prPos = pointOfReference.position;
-        Vector3 prFwd = pointOfReference.forward;
+        Vector3 prPos = getBetweenPosition();
+        Vector3 prFwd = pointOfReference1.forward;
         Vector3 offset = startPositions[stateName];
-
-        Vector3 lookPos = new Vector3(trPos.x + prFwd.x, 0, trPos.z + prFwd.z);
-        this.transform.LookAt(lookPos);
-
+        Vector3 dir = startDirs[stateName];
+        
         Vector3 posOffSet = transform.forward * offset.z + transform.right * offset.x;
-        transform.position = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
+        Vector3 pos = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
+        Vector3 lookAtPos = pointOfReference1.position + prFwd + (transform.position - pointOfReference1.position);
+        lookAtPos.y = 0;
+        transform.LookAt(lookAtPos);
+
+        transform.position = pos;
+
+        transform.RotateAround(prPos, Vector3.up, Vector3.SignedAngle(Vector3.forward, dir, Vector3.up));
     }
 
     public void playStates(List<string> stateNames, bool loop)
