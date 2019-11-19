@@ -9,9 +9,17 @@ public class AnimatorController : MonoBehaviour
     public List<string> stateNames;
 
     Dictionary<string, Vector3> startPositions;
-    Dictionary<string, Vector3> startDirs;
+    Dictionary<string, float> startAngles;
     Animator animator;
     void Awake() { init(); }
+
+    float angleToForwardBetween0And360(Vector3 vec) {
+        Vector3 vecP = Vector3.ProjectOnPlane(vec.normalized, transform.up);
+        float angle = Vector3.Angle(transform.forward, vecP);
+        float res = Vector3.Dot(vecP, transform.right) >= 0 ? angle : 360 - angle;
+        Debug.Log(res);
+        return res;
+    }
 
     void init()
     {
@@ -19,7 +27,7 @@ public class AnimatorController : MonoBehaviour
 
         stateNames = new List<string>();
         startPositions = new Dictionary<string, Vector3>();
-        startDirs = new Dictionary<string, Vector3>();
+        startAngles = new Dictionary<string, float>();
         var clips = animator.runtimeAnimatorController.animationClips;
 
         foreach (var clip in clips)
@@ -27,7 +35,7 @@ public class AnimatorController : MonoBehaviour
             var stateName = clip.name;
             clip.SampleAnimation(gameObject, 0);
             startPositions.Add(stateName, getBetweenPosition());
-            startDirs.Add(stateName, pointOfReference1.forward);
+            startAngles.Add(stateName, angleToForwardBetween0And360(pointOfReference1.forward));
             stateNames.Add(stateName);
         }
     }
@@ -42,33 +50,12 @@ public class AnimatorController : MonoBehaviour
         Vector3 prPos = getBetweenPosition();
         Vector3 prFwd = pointOfReference1.forward;
         Vector3 offset = startPositions[stateName];
-        Vector3 dir = startDirs[stateName];
+        float angle = startAngles[stateName];
         
         Vector3 posOffSet = transform.forward * offset.z + transform.right * offset.x;
         transform.position = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
-
-        float angle = Vector3.SignedAngle(transform.forward, prFwd, Vector3.up) + 
-        Vector3.SignedAngle(Vector3.forward, dir, Vector3.up);
-
-        transform.RotateAround(prPos, Vector3.up, angle);
-
-        /*
-                Vector3 trPos = transform.position;
-        Vector3 prPos = getBetweenPosition();
-        Vector3 prFwd = pointOfReference1.forward;
-        Vector3 offset = startPositions[stateName];
-        Vector3 dir = startDirs[stateName];
-        
-        Vector3 posOffSet = transform.forward * offset.z + transform.right * offset.x;
-        Vector3 pos = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
-        Vector3 lookAtPos = pointOfReference1.position + prFwd + (transform.position - pointOfReference1.position);
-        lookAtPos.y = 0;
-        transform.LookAt(lookAtPos);
-
-        transform.position = pos;
-
-        transform.RotateAround(prPos, Vector3.up, Vector3.SignedAngle(Vector3.forward, dir, Vector3.up));
-         */
+        float nowAngle = angleToForwardBetween0And360(prFwd);
+        transform.RotateAround(prPos, Vector3.up, nowAngle - angle);
     }
 
     public void playStates(List<string> stateNames, bool loop)
