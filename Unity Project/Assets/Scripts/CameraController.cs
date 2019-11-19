@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform pointOfReference;
+    public Transform pointOfReference1, pointOfReference2;
     [Range(12, 90)]
     public float minFov, maxFov;
     
@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
     }
 
     void track(){
-        pivot.position = pointOfReference.position;
+        pivot.position = pointOfReference1.position + (0.5f * (pointOfReference2.position - pointOfReference1.position));
     }
 
     public void zoom(float amount){
