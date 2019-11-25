@@ -9,7 +9,7 @@ public class ButtonHandler : MonoBehaviour
 
     public void createFigureList()
     {
-        listOfFigures.Add(DropdownHandler.myFigure);
-        GameObject.Find("ChoreographyText").GetComponentInChildren<Text>().text += "\n" + DropdownHandler.myFigure;
+        listOfFigures.Add(DropdownHandler.lastFigure);
+        GameObject.Find("ChoreographyText").GetComponentInChildren<Text>().text += "\n" + DropdownHandler.lastFigure;
     }
 }
