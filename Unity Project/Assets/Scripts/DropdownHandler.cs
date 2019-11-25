@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class DropdownHandler : MonoBehaviour
     public List<string> stateNames;
 
     Animator animator;
+
+    Dictionary <string, string[]> rules;
 
     void Awake() { init(); }
 
@@ -33,6 +36,19 @@ public class DropdownHandler : MonoBehaviour
             }
         }
         myDropdown.AddOptions(stateNames);
+
+        initializeRulesDictionary();
+    }
+
+    void initializeRulesDictionary(){
+        rules = new Dictionary<string, string[]>();
+
+        foreach(var name in stateNames) {
+            var file = Resources.Load<TextAsset>("Text/" + name);
+            string[] lines = Regex.Split(file.text, "\r\n|\r|\n");
+
+            rules.Add(name, lines);
+        }
     }
 
     void Start()
@@ -56,12 +72,9 @@ public class DropdownHandler : MonoBehaviour
 
         if (lastFigure != null)
         {
-            string fileName = lastFigure + ".json";
-            string figurePath = Path.Combine(Application.dataPath + "/Resources/Text/", fileName);
-            string[] figures = File.ReadAllLines(figurePath);
             myDropdown.ClearOptions();
 
-            foreach (var figure in figures)
+            foreach (var figure in rules[lastFigure])
             {
                 figureNames.Add(figure);
             }
