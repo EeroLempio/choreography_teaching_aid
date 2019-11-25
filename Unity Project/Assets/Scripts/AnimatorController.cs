@@ -13,11 +13,11 @@ public class AnimatorController : MonoBehaviour
     Animator animator;
     void Awake() { init(); }
 
-    float angleToForwardBetween0And360(Vector3 vec) {
+    float angleToForwardBetween0And360(Vector3 vec)
+    {
         Vector3 vecP = Vector3.ProjectOnPlane(vec.normalized, transform.up);
         float angle = Vector3.Angle(transform.forward, vecP);
         float res = Vector3.Dot(vecP, transform.right) >= 0 ? angle : 360 - angle;
-        Debug.Log(res);
         return res;
     }
 
@@ -40,7 +40,8 @@ public class AnimatorController : MonoBehaviour
         }
     }
 
-    Vector3 getBetweenPosition(){
+    Vector3 getBetweenPosition()
+    {
         return pointOfReference1.position + (0.5f * (pointOfReference2.position - pointOfReference1.position));
     }
 
@@ -51,7 +52,7 @@ public class AnimatorController : MonoBehaviour
         Vector3 prFwd = pointOfReference1.forward;
         Vector3 offset = startPositions[stateName];
         float angle = startAngles[stateName];
-        
+
         Vector3 posOffSet = transform.forward * offset.z + transform.right * offset.x;
         transform.position = new Vector3(prPos.x, trPos.y, prPos.z) - posOffSet;
         float nowAngle = angleToForwardBetween0And360(prFwd);
